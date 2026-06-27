@@ -36,7 +36,8 @@ def evaluate_one(row: dict) -> dict:
     try:
         answer = market_researcher(question).get("text_summary", "")
     except Exception as exc:  # tool failed -> fail
-        return {"id": row["id"], "correct": False, "reason": f"tool error: {exc}"}
+        return {"id": row["id"], "question": question, "prediction": "",
+                "gt": row["strong_answer"], "correct": False, "reason": f"tool error: {exc}"}
 
     user = (
         f"QUESTION:\n{question}\n\n"
@@ -52,7 +53,9 @@ def evaluate_one(row: dict) -> dict:
         response_format={"type": "json_object"},
     )
     verdict = json.loads(resp.choices[0].message.content)
-    return {"id": row["id"], "correct": bool(verdict.get("correct", False)), "reason": verdict.get("reason", "")}
+    return {"id": row["id"], "question": question, "prediction": answer,
+            "gt": row["strong_answer"], "correct": bool(verdict.get("correct", False)),
+            "reason": verdict.get("reason", "")}
 
 
 def main() -> None:
