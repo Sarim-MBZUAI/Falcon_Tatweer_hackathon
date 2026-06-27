@@ -68,6 +68,8 @@ structured response:
 This makes the tool accessible to users who prefer conversation over reading
 long reports.
 
+![Hakim AI — from a spoken or typed question (English or Arabic) through the market-research workflow (understand, plan, web-research, analyze, synthesize, generate) to a spoken answer with text, charts, and citations](artifacts/readme_diagram.png)
+
 ## How it works
 
 Hakim AI has three layers:
