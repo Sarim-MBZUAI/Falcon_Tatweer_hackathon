@@ -249,3 +249,28 @@ npm start
 
 The site is a lightweight Next.js app and deploys to **Vercel**: low cost,
 scales to zero when idle, minimal maintenance.
+
+## Feasibility
+
+Hakim AI is practical to build and run because it is lightweight and entirely
+web-based — no expensive hardware, complex installation, or large operations team.
+The frontend uses standard web technologies, the market-research output is
+structured and validated, and answers are grounded in live web search rather than
+model memory alone. Because that output is simple to render as text, charts, and
+citations, and because users interact by voice or text, entrepreneurs need no
+technical knowledge to use it — which is exactly what makes it deployable in rural
+communities where comfort with technology varies.
+
+## Scalability
+
+Hakim AI scales well beyond Al Qua'a because the underlying problem — entrepreneurs
+lacking local data when deciding what to build or sell — exists almost everywhere:
+other rural UAE communities, different emirates, and tourism, farming, home-business,
+youth-entrepreneurship, and SME-support settings. The core workflow never changes
+(the user describes an idea, Hakim searches for UAE-specific evidence, and the tool
+returns feasibility, target audience, strategy, risks, a chart, and citations that
+lead to a clear next step), so adapting it to a new community is mostly a matter of
+swapping the local knowledge base. Future versions can extend this with WhatsApp
+access, saved business reports, community survey collection, demand dashboards,
+broader Arabic-dialect support, village-by-village comparison, and integration with
+official UAE open-data sources.
