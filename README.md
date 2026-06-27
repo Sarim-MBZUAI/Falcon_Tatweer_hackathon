@@ -16,6 +16,12 @@ response covering:
 - UAE-specific evidence and citations
 - A simple chart to support decision-making
 
+Many entrepreneurs don't need a complex business report. They need clear answers
+to simple but important questions: Is this idea worth testing? Who should I sell
+to first? What data should I collect? What could make this fail? What's the
+cheapest way to validate it? Hakim gives that guidance in a simple, conversational
+way, moving rural entrepreneurship from guessing to evidence-based action.
+
 Built for the **Tatweer Hackathon**, Challenge 3: _The data gap for local
 entrepreneurs_. Hakim AI is built for rural UAE communities where many people
 have strong business ideas but limited access to local market data, customer
@@ -246,12 +252,3 @@ npm start
 
 The site is a lightweight Next.js app and deploys to **Vercel**: low cost,
 scales to zero when idle, minimal maintenance.
-
-## Why Hakim AI matters
-
-Many entrepreneurs don't need a complex business report. They need clear answers
-to simple but important questions: Is this idea worth testing? Who should I sell
-to first? What data should I collect? What could make this fail? What's the
-cheapest way to validate it? Hakim gives that guidance in a simple,
-conversational way, moving rural entrepreneurship from guessing to
-evidence-based action.
