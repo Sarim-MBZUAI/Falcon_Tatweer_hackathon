@@ -1,0 +1,4 @@
+# Dev/test-only dependencies. Runtime deps live in requirements.txt (owned by
+# the implementation worktree). Install with: pip install -r requirements-dev.txt
+pytest
+python-dotenv
