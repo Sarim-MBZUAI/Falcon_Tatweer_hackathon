@@ -120,27 +120,33 @@ async function pickStockAvatar(key: string): Promise<string> {
   return avatars[0].id;
 }
 
-/** Pick a male, ideally multilingual (Arabic-capable) voice. */
+// Preferred male voices by name, most "normal / natural" first. The account's
+// voice catalog is mostly English (Cartesia); there is no native Arabic male
+// voice available, so Arabic will carry a light accent. Override with
+// ANAM_VOICE_ID in .env to force a specific voice.
+const PREFERRED_MALE_VOICES = ["Cooper", "Laurent", "Corey", "Archie"];
+
+/** Pick a natural-sounding male voice (overridable via ANAM_VOICE_ID). */
 async function pickMaleVoice(key: string): Promise<string> {
+  const override = process.env.ANAM_VOICE_ID;
+  if (override) return override;
+
   const voices = (await listJson(key, "/v1/voices")) as Array<{
     id: string;
+    name?: string;
+    displayName?: string;
     gender?: string | null;
-    provider?: string;
-    displayTags?: string[];
   }>;
   if (!voices.length) throw new Error("No voices available.");
 
-  const isMale = (v: { gender?: string | null }) =>
-    (v.gender || "").toUpperCase() === "MALE";
-  const isMultilingual = (v: { provider?: string; displayTags?: string[] }) =>
-    (v.provider || "").toUpperCase() === "ELEVENLABS" ||
-    (v.displayTags || []).some((t) => /multiling/i.test(t));
-
-  return (
-    voices.find((v) => isMale(v) && isMultilingual(v))?.id ||
-    voices.find(isMale)?.id ||
-    voices[0].id
-  );
+  const nameOf = (v: { name?: string; displayName?: string }) =>
+    (v.name || v.displayName || "").toLowerCase();
+  const males = voices.filter((v) => (v.gender || "").toUpperCase() === "MALE");
+  for (const preferred of PREFERRED_MALE_VOICES) {
+    const match = males.find((v) => nameOf(v).includes(preferred.toLowerCase()));
+    if (match) return match.id;
+  }
+  return males[0]?.id || voices[0].id;
 }
 
 async function createPersona(
@@ -191,6 +197,31 @@ async function createAgent(): Promise<AnamAgent> {
   };
   await fs.writeFile(AGENT_FILE, JSON.stringify(agent, null, 2));
   console.log(`[anam] Saved agent ids to anam-agent.json`);
+  return agent;
+}
+
+/**
+ * Re-create the persona on the existing avatar with a freshly-picked voice and
+ * rewrite anam-agent.json. Use this to change Hakim's voice without paying for a
+ * new avatar. Returns the updated agent record.
+ */
+export async function reprovisionPersona(): Promise<AnamAgent> {
+  const key = apiKey();
+  const existing = await readAgentFile();
+  if (!existing) {
+    // Nothing to reuse; do a full first-time provision instead.
+    return createAgent();
+  }
+  const voiceId = await pickMaleVoice(key);
+  const personaId = await createPersona(key, existing.avatarId, voiceId);
+  const agent: AnamAgent = {
+    ...existing,
+    voiceId,
+    personaId,
+    createdAt: new Date().toISOString(),
+  };
+  await fs.writeFile(AGENT_FILE, JSON.stringify(agent, null, 2));
+  console.log(`[anam] Re-provisioned persona ${personaId} with voice ${voiceId}.`);
   return agent;
 }
 

@@ -108,12 +108,28 @@ export default function HakimPage() {
 
       const ar = hasArabic(text);
       try {
+        // Phase 1 (fast): does this turn actually need market research?
+        const planRes = await fetch("/api/plan", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ messages: historyRef.current }),
+        });
+        const plan = await planRes.json();
+
+        if (planRes.ok && plan.mode === "answer" && plan.spoken_text) {
+          // Small talk / no research: reply instantly, no filler.
+          historyRef.current.push({ role: "assistant", content: plan.spoken_text });
+          await speak(plan.spoken_text);
+          return;
+        }
+
+        // Phase 2 (slow): research is warranted. Now the filler is natural.
         setSpeaking(true);
         client
           .talk(
             ar
               ? "لحظة من فضلك، أبحث في بيانات السوق الإماراتي."
-              : "Give me a moment while I research the UAE market data for you."
+              : "Good question, let me look into the UAE market data for you."
           )
           .catch(() => {});
 
@@ -294,11 +310,16 @@ export default function HakimPage() {
 
   return (
     <main className="relative h-screen w-screen overflow-hidden bg-ink text-white">
+      {/* Soft spotlight behind the avatar so the letterboxed area feels intentional */}
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_70%_at_50%_42%,rgba(232,185,106,0.10),transparent_70%)]"
+        aria-hidden
+      />
       <video
         id="hakim-video"
         autoPlay
         playsInline
-        className="absolute inset-0 h-full w-full bg-ink object-cover"
+        className="absolute inset-0 mx-auto h-full w-full max-w-5xl object-contain object-center"
       />
       <div
         className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-ink/90 to-transparent"
@@ -381,7 +402,12 @@ export default function HakimPage() {
       <div className="absolute inset-x-0 bottom-0 z-20 px-5 pb-6">
         <div className="mx-auto w-full max-w-2xl">
           {isLive && (
-            <p className="mb-2 truncate text-center text-xs text-white/50">
+            <p
+              dir={lastUserText && hasArabic(lastUserText) ? "rtl" : "ltr"}
+              className={`mb-2 truncate text-center text-xs text-white/50 ${
+                lastUserText && hasArabic(lastUserText) ? "font-arabic" : ""
+              }`}
+            >
               {userSpeaking
                 ? "Listening to you..."
                 : transcribing

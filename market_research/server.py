@@ -48,6 +48,9 @@ SYSTEM_PROMPT = (
     "feasibility, audience, competition, or strategy, CALL the market_researcher "
     "tool with a clear description of the idea. Do not call it again for "
     "follow-up questions that the existing research already answers.\n\n"
+    "If the user is only greeting you, making small talk, thanking you, or asking "
+    "something that does not need market data, DO NOT call the tool. Just reply "
+    "briefly and warmly in their language, like a normal person in conversation.\n\n"
     "After you have the research, give a SHORT spoken answer (2 to 4 sentences) "
     "that a friendly avatar can say out loud: state the headline verdict and the "
     "single most useful insight, and tell the user that the full data, chart, "
@@ -139,6 +142,38 @@ async def transcribe(file: UploadFile = File(...)) -> dict:
         return {"text": (result.text or "").strip()}
     except Exception as exc:  # surface a readable error to the client
         return {"text": "", "error": str(exc)}
+
+
+@app.post("/plan")
+def plan(req: AgentRequest) -> dict:
+    """Fast first pass: decide whether the latest message needs market research.
+
+    Returns either:
+      { "mode": "answer", "spoken_text": "..." }   # small talk / no research
+      { "mode": "research" }                         # caller should run /agent
+
+    This lets the client answer chit-chat instantly (no "let me research" filler)
+    and only show the research flow when a tool call is actually warranted.
+    """
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        return {"mode": "answer", "spoken_text": "I'm missing my OpenAI key right now."}
+
+    from openai import OpenAI
+
+    client = OpenAI(api_key=api_key)
+    messages: list[dict] = [{"role": "system", "content": SYSTEM_PROMPT}]
+    for m in req.messages:
+        if m.role in ("user", "assistant") and m.content:
+            messages.append({"role": m.role, "content": m.content})
+
+    resp = client.chat.completions.create(
+        model=ORCHESTRATOR_MODEL, messages=messages, tools=TOOLS, tool_choice="auto"
+    )
+    msg = resp.choices[0].message
+    if msg.tool_calls:
+        return {"mode": "research"}
+    return {"mode": "answer", "spoken_text": (msg.content or "").strip()}
 
 
 @app.post("/agent", response_model=AgentResponse)

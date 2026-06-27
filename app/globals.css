@@ -9,7 +9,7 @@
   --color-gold-soft: #f4d7a1;
   --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
   --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-arabic: var(--font-arabic), ui-sans-serif, system-ui, sans-serif;
+  --font-arabic: var(--font-arabic-src), ui-sans-serif, system-ui, sans-serif;
 }
 
 * {

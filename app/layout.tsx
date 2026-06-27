@@ -17,7 +17,9 @@ const inter = Inter({
 const arabic = IBM_Plex_Sans_Arabic({
   subsets: ["arabic"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-arabic",
+  // Distinct from the Tailwind theme token (--font-arabic) to avoid a
+  // self-referential CSS variable cycle that broke the font-arabic utility.
+  variable: "--font-arabic-src",
   display: "swap",
 });
 
@@ -33,8 +35,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
+        suppressHydrationWarning
         className={`${spaceGrotesk.variable} ${inter.variable} ${arabic.variable}`}
       >
         {children}

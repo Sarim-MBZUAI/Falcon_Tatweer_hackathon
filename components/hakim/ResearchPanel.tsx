@@ -10,33 +10,47 @@ const confidenceStyles: Record<Citation["confidence"], string> = {
   low: "border-white/20 bg-white/5 text-white/50",
 };
 
+function SectionHeading({
+  icon: Icon,
+  label,
+}: {
+  icon: typeof Sparkles;
+  label: string;
+}) {
+  return (
+    <h3 className="mb-2 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-gold">
+      <Icon className="h-3.5 w-3.5" /> {label}
+    </h3>
+  );
+}
+
 function CitationCard({ c }: { c: Citation }) {
   const rtl = hasArabic(c.claim);
   return (
-    <div className="rounded-xl border border-line bg-ink/60 p-3.5">
-      <div className="mb-2 flex items-center justify-between gap-2">
-        <span className="text-xs font-semibold text-white/80">{c.source_name}</span>
+    <div className="rounded-xl border border-line bg-ink/60 p-3 transition-colors hover:border-gold/30">
+      <div className="mb-1.5 flex items-center justify-between gap-2">
+        <span className="truncate text-xs font-semibold text-white/85">{c.source_name}</span>
         <span
-          className={`shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-medium uppercase ${confidenceStyles[c.confidence]}`}
+          className={`shrink-0 rounded-full border px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide ${confidenceStyles[c.confidence]}`}
         >
           {c.confidence}
         </span>
       </div>
       <p
         dir={rtl ? "rtl" : "ltr"}
-        className={`text-sm leading-relaxed text-white/70 ${rtl ? "font-arabic text-right" : ""}`}
+        className={`line-clamp-2 text-xs leading-relaxed text-white/65 ${rtl ? "font-arabic text-right" : ""}`}
       >
         {c.claim}
       </p>
-      <div className="mt-2 flex items-center gap-2 text-xs text-white/40">
-        <span>{c.publisher}</span>
-        {c.year && <span>· {c.year}</span>}
+      <div className="mt-2 flex items-center gap-1.5 text-[11px] text-white/40">
+        <span className="truncate">{c.publisher}</span>
+        {c.year && <span className="shrink-0">· {c.year}</span>}
         {c.url && (
           <a
             href={c.url}
             target="_blank"
             rel="noreferrer"
-            className="ml-auto inline-flex items-center gap-1 text-gold hover:text-gold-soft"
+            className="ml-auto inline-flex shrink-0 items-center gap-1 text-gold hover:text-gold-soft"
           >
             Source <ExternalLink className="h-3 w-3" />
           </a>
@@ -81,63 +95,73 @@ export function ResearchPanel({
   if (!research) return null;
 
   const summaryRtl = hasArabic(research.text_summary);
+  const charts = research.chart_data ?? [];
+  const citations = research.data_citation ?? [];
 
   return (
-    <div className="flex h-full flex-col gap-5 overflow-y-auto pr-1">
-      {loading && (
-        <div className="flex items-center gap-2 rounded-lg border border-gold/30 bg-gold/10 px-3 py-2 text-xs text-gold-soft">
-          <Loader2 className="h-3.5 w-3.5 animate-spin" /> Updating with new research...
-        </div>
-      )}
+    // Fixed 3-row grid: chart (auto) / summary (flexible, scrolls) / citations
+    // (auto). minmax(0,1fr) lets the summary shrink and scroll instead of
+    // pushing into the citations below it.
+    <div className="grid h-full min-h-0 grid-rows-[auto_minmax(0,1fr)_auto] gap-4 overflow-hidden">
+      {/* 1. Chart — static, top */}
+      <div className="space-y-3">
+        {loading && (
+          <div className="flex items-center gap-2 rounded-lg border border-gold/30 bg-gold/10 px-3 py-2 text-xs text-gold-soft">
+            <Loader2 className="h-3.5 w-3.5 animate-spin" /> Updating with new research...
+          </div>
+        )}
+        {charts.length > 0 && (
+          <section>
+            <SectionHeading icon={BarChart3} label="Market data" />
+            <div className="flex flex-col gap-3">
+              {charts.map((g, i) => (
+                <div
+                  key={i}
+                  className="rounded-2xl border border-line bg-gradient-to-b from-card/80 to-card/40 p-4"
+                >
+                  <div className="mb-1 flex items-center justify-between gap-2">
+                    <p className="text-sm font-semibold text-white">{g.title}</p>
+                    {g.is_estimate && (
+                      <span className="shrink-0 rounded-full border border-white/20 bg-white/5 px-2 py-0.5 text-[10px] uppercase text-white/50">
+                        Estimate
+                      </span>
+                    )}
+                  </div>
+                  <ResearchChart graph={g} />
+                  {g.note && <p className="mt-2 text-xs leading-relaxed text-white/45">{g.note}</p>}
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+      </div>
 
-      <section>
-        <h3 className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-gold">
-          <Sparkles className="h-3.5 w-3.5" /> Summary
-        </h3>
-        <p
-          dir={summaryRtl ? "rtl" : "ltr"}
-          className={`whitespace-pre-wrap text-sm leading-relaxed text-white/75 ${summaryRtl ? "font-arabic text-right" : ""}`}
-        >
-          {research.text_summary}
-        </p>
+      {/* 2. Summary — the only scrollable region, middle */}
+      <section className="flex min-h-0 flex-col">
+        <SectionHeading icon={Sparkles} label="Summary" />
+        <div className="min-h-0 flex-1 overflow-y-auto rounded-2xl border border-line bg-ink/40 p-4 pr-3">
+          <p
+            dir={summaryRtl ? "rtl" : "ltr"}
+            className={`whitespace-pre-wrap text-sm leading-relaxed text-white/75 ${summaryRtl ? "font-arabic text-right" : ""}`}
+          >
+            {research.text_summary}
+          </p>
+        </div>
       </section>
 
-      {research.chart_data?.length > 0 && (
-        <section>
-          <h3 className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-gold">
-            <BarChart3 className="h-3.5 w-3.5" /> Data
-          </h3>
-          <div className="flex flex-col gap-4">
-            {research.chart_data.map((g, i) => (
-              <div key={i} className="rounded-2xl border border-line bg-card/60 p-4">
-                <div className="mb-1 flex items-center justify-between gap-2">
-                  <p className="text-sm font-semibold text-white">{g.title}</p>
-                  {g.is_estimate && (
-                    <span className="shrink-0 rounded-full border border-white/20 bg-white/5 px-2 py-0.5 text-[10px] uppercase text-white/50">
-                      Estimate
-                    </span>
-                  )}
-                </div>
-                <ResearchChart graph={g} />
-                {g.note && <p className="mt-2 text-xs leading-relaxed text-white/45">{g.note}</p>}
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {research.data_citation?.length > 0 && (
-        <section>
-          <h3 className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-gold">
-            <BookOpen className="h-3.5 w-3.5" /> Sources ({research.data_citation.length})
-          </h3>
-          <div className="flex flex-col gap-3">
-            {research.data_citation.map((c, i) => (
-              <CitationCard key={i} c={c} />
-            ))}
-          </div>
-        </section>
-      )}
+      {/* 3. Citations — static, bottom */}
+      <div>
+        {citations.length > 0 && (
+          <section>
+            <SectionHeading icon={BookOpen} label={`Sources (${citations.length})`} />
+            <div className="flex flex-col gap-2">
+              {citations.map((c, i) => (
+                <CitationCard key={i} c={c} />
+              ))}
+            </div>
+          </section>
+        )}
+      </div>
     </div>
   );
 }
