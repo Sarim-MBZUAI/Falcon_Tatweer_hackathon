@@ -2,6 +2,8 @@
 
 **A bilingual AI market-research assistant for rural UAE entrepreneurs.**
 
+![Hakim AI — from a spoken or typed question (English or Arabic) through the market-research workflow (understand, plan, web-research, analyze, synthesize, generate) to a spoken answer with text, charts, and citations](artifacts/readme_diagram.png)
+
 Hakim AI helps local entrepreneurs make better business decisions using evidence
 instead of guesswork. Entrepreneurs can **speak or type naturally in English or
 Arabic**, describe a business idea, and receive a structured market-research
@@ -67,8 +69,6 @@ structured response:
 
 This makes the tool accessible to users who prefer conversation over reading
 long reports.
-
-![Hakim AI — from a spoken or typed question (English or Arabic) through the market-research workflow (understand, plan, web-research, analyze, synthesize, generate) to a spoken answer with text, charts, and citations](artifacts/readme_diagram.png)
 
 ## How it works
 
