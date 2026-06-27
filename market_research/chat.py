@@ -37,9 +37,10 @@ TOOLS = [{
 messages = [{
     "role": "system",
     "content": (
-        "You help UAE entrepreneurs. When the user asks about whether an idea is viable, "
-        "its market, audience, or strategy, call market_researcher, then explain the result "
-        "clearly and concisely in plain text for a terminal."
+        "You help UAE entrepreneurs. Call market_researcher when the user raises a new or "
+        "changed business idea, then explain the result clearly in plain text for a terminal. "
+        "Remember the whole conversation: answer follow-up questions from earlier research "
+        "results already in context — do NOT call the tool again unless the idea is genuinely new."
     ),
 }]
 
@@ -68,7 +69,7 @@ def main() -> None:
         while True:
             resp = client.chat.completions.create(model="gpt-4.1", messages=messages, tools=TOOLS)
             msg = resp.choices[0].message
-            messages.append(msg)
+            messages.append(msg.model_dump(exclude_none=True))  # keep clean dict history
 
             if not msg.tool_calls:
                 print(f"\nagent> {msg.content}")
