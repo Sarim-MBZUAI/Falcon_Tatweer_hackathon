@@ -259,9 +259,7 @@ criteria text, repo URL, citation-gate note) live in
 2. **Benchmark** — 50 curated QA, build hours, contributors, two example QA
    (English + Arabic), and the citation-gating integrity note.
 3. **Score** — 74% accuracy (LLM-as-judge) and what was measured.
-4. **Impact / Relevance / Feasibility / Readiness / Scalability** — judging
-   criteria evidence.
-5. **Repository & documentation** — repo link and what this README covers.
+4. **Repository & documentation** — repo link and what this README covers.
 
 ## Why Hakim AI matters
 
