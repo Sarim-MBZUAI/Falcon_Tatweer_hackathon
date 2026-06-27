@@ -21,8 +21,9 @@ TOOLS = [{
     "function": {
         "name": "market_researcher",
         "description": (
-            "UAE-only, web-search-grounded market research for a business idea. "
-            "Returns feasibility, graphs_data, data_citation, target_audience and best_strategy."
+            "UAE-only, web-search-grounded market research for a business idea. Returns "
+            "text_summary (a prose briefing on feasibility, audience, strategy and risks), "
+            "chart_data (one decision-relevant chart), and data_citation (real UAE sources)."
         ),
         "parameters": {
             "type": "object",
