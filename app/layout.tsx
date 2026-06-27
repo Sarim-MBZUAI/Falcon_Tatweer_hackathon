@@ -22,7 +22,7 @@ const arabic = IBM_Plex_Sans_Arabic({
 });
 
 export const metadata: Metadata = {
-  title: "Hakim AI — Evidence for local entrepreneurs",
+  title: "Hakim AI · Evidence for local entrepreneurs",
   description:
     "Hakim AI is a bilingual (Arabic & English) market-research avatar that helps local entrepreneurs in rural communities decide with evidence instead of guesswork.",
 };

@@ -6,14 +6,23 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "setup:anam": "tsx scripts/setup-anam.ts",
+    "setup:vad": "mkdir -p public/vad && cp node_modules/@ricky0123/vad-web/dist/vad.worklet.bundle.min.js node_modules/@ricky0123/vad-web/dist/silero_vad_v5.onnx node_modules/@ricky0123/vad-web/dist/silero_vad_legacy.onnx public/vad/ && cp node_modules/onnxruntime-web/dist/ort-wasm-simd-threaded.* public/vad/",
+    "postinstall": "npm run setup:vad",
+    "agent": ".venv/bin/uvicorn market_research.server:app --port 8001 --reload"
   },
   "dependencies": {
+    "@anam-ai/js-sdk": "^4.17.1",
+    "@ricky0123/vad-web": "^0.0.30",
     "framer-motion": "^11.18.2",
     "lucide-react": "^0.468.0",
     "next": "^16.2.9",
+    "onnxruntime-web": "^1.27.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "recharts": "^3.9.0",
+    "sharp": "^0.35.2"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.0.0",
@@ -21,6 +30,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "tailwindcss": "^4.0.0",
+    "tsx": "^4.19.2",
     "typescript": "^5"
   }
 }

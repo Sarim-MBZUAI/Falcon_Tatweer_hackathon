@@ -17,7 +17,7 @@ export function Footer() {
           communities across the UAE and beyond.
         </p>
         <p className="text-xs text-white/30">
-          Tatweer Hackathon · Challenge 3 — The data gap for local entrepreneurs
+          Tatweer Hackathon · Challenge 3: The data gap for local entrepreneurs
         </p>
       </div>
     </footer>

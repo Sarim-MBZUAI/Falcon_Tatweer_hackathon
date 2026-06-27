@@ -40,7 +40,7 @@ export function Repo() {
                   GitHub repository
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-white/60">
-                  Source for the agent, benchmark, and this landing site — open
+                  Source for the agent, benchmark, and this landing site, open
                   and documented.
                 </p>
               </div>

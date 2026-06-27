@@ -79,6 +79,11 @@ body {
 
 .animate-float {
   animation: float 6s ease-in-out infinite;
+  /* Promote to its own GPU layer so the heavy blur glow behind it does not
+     trigger repaints (a common source of flicker). */
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .text-shimmer {
@@ -93,6 +98,10 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: shimmer 6s linear infinite;
+  /* Isolate the clipped-text gradient onto its own layer; without this the
+     gradient re-rasterizes against animated ancestors and flickers. */
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .grid-bg {
@@ -100,4 +109,15 @@ body {
     linear-gradient(90deg, rgba(232, 185, 106, 0.06) 1px, transparent 1px);
   background-size: 48px 48px;
   mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

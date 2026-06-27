@@ -22,6 +22,19 @@ yarn-error.log*
 # env files
 .env*
 
+# anam generated agent ids (created on first run)
+anam-agent.json
+
+# VAD runtime assets (regenerated via `npm run setup:vad` / postinstall)
+/public/vad/
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+market_research/results/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

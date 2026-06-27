@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 
@@ -55,12 +56,12 @@ export function Nav() {
           ))}
         </div>
 
-        <a
-          href="#try"
+        <Link
+          href="/hakim"
           className="group relative inline-flex items-center gap-2 rounded-full bg-gold px-4 py-2 text-sm font-semibold text-ink transition-transform hover:scale-[1.03] active:scale-95"
         >
           Try Agent
-        </a>
+        </Link>
       </nav>
     </motion.header>
   );

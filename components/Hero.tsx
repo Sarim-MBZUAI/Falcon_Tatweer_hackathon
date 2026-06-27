@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, BarChart3, MessageSquareText } from "lucide-react";
 import { Starfield } from "./Starfield";
@@ -27,7 +28,7 @@ export function Hero() {
             className="mb-6 inline-flex items-center gap-2 rounded-full border border-line bg-card/60 px-3 py-1.5 text-xs text-white/70 backdrop-blur"
           >
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-gold" />
-            Tatweer Hackathon — Challenge 3: The data gap for local entrepreneurs
+            Tatweer Hackathon · Challenge 3: The data gap for local entrepreneurs
           </motion.div>
 
           <motion.h1
@@ -46,7 +47,7 @@ export function Hero() {
             className="mt-6 max-w-xl text-lg leading-relaxed text-white/65"
           >
             A talking avatar that speaks Arabic and English, does real market
-            research, and turns scattered local data into clear, cited insight —
+            research, and turns scattered local data into clear, cited insight,
             so local entrepreneurs decide with evidence, not guesswork.
           </motion.p>
 
@@ -57,7 +58,7 @@ export function Hero() {
             transition={{ duration: 0.7, delay: 0.25 }}
             className="mt-3 font-arabic text-base text-gold-soft/80"
           >
-            مستشارك الذكي لرواد الأعمال المحليين — قرارات مبنية على البيانات
+            مستشارك الذكي لرواد الأعمال المحليين، قرارات مبنية على البيانات
           </motion.p>
 
           <motion.div
@@ -66,15 +67,14 @@ export function Hero() {
             transition={{ duration: 0.7, delay: 0.3 }}
             className="mt-9 flex flex-wrap items-center gap-4"
           >
-            <a
-              id="try"
-              href="#try"
+            <Link
+              href="/hakim"
               className="group inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 text-base font-semibold text-ink shadow-[0_0_40px_-8px_rgba(232,185,106,0.6)] transition-transform hover:scale-[1.03] active:scale-95"
             >
               <MessageSquareText className="h-5 w-5" />
               Try Agent
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </a>
+            </Link>
             <a
               href="#benchmark"
               className="inline-flex items-center gap-2 rounded-full border border-line bg-card/40 px-6 py-3.5 text-base font-medium text-white/80 backdrop-blur transition-colors hover:border-gold/50 hover:text-white"
@@ -98,7 +98,7 @@ export function Hero() {
           <div className="animate-float relative overflow-hidden rounded-[1.75rem] border border-line bg-card shadow-2xl">
             <Image
               src="/hakim.png"
-              alt="Hakim AI — bilingual market-research avatar"
+              alt="Hakim AI, bilingual market-research avatar"
               width={1024}
               height={683}
               priority

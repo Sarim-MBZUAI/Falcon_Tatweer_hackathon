@@ -44,7 +44,7 @@ function QACard({ qa, delay }: { qa: SampleQA; delay: number }) {
           <p className="mt-2 text-sm leading-relaxed text-white/60">
             {qa.citation}
           </p>
-          <p className="mt-2 text-xs italic text-white/40">— {qa.source}</p>
+          <p className="mt-2 text-xs italic text-white/40">{qa.source}</p>
         </div>
       </article>
     </Reveal>
@@ -57,7 +57,7 @@ export function Benchmark() {
       <SectionHeading
         eyebrow="Benchmark"
         title="Proven against a curated test set"
-        description="We didn't just build an agent — we measured it. Hakim was benchmarked on a hand-written, manually verified set of questions a local entrepreneur would actually ask."
+        description="We didn't just build an agent. We measured it. Hakim was benchmarked on a hand-written, manually verified set of questions a local entrepreneur would actually ask."
       />
 
       <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-3">

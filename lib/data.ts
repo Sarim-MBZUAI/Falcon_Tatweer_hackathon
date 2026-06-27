@@ -36,7 +36,7 @@ export const sampleQAs: SampleQA[] = [
       "Demand for camel-feed and livestock supplies is the strongest local signal: a large share of households run camel farms, and feed is a recurring monthly purchase. Pairing feed sales with basic veterinary items captures repeat customers other shops miss.",
     citation:
       "Local data shows many households in the community operate camel farms as a primary source of income, making feed a recurring monthly purchase.",
-    source: "Local community data — household profile",
+    source: "Local community data, household profile",
   },
   {
     lang: "ar",
@@ -48,7 +48,7 @@ export const sampleQAs: SampleQA[] = [
       "البيانات المحلية تبيّن إن المنطقة من أفضل أماكن مراقبة النجوم بسبب قلة التلوث الضوئي. مخيم صغير لرصد النجوم مع جلسات ليلية وتجربة مزارع الإبل يخدم هالميزة ويجذب الزوار من داخل الدولة وخارجها.",
     citation:
       "تشير البيانات المحلية إلى انخفاض التلوث الضوئي في المنطقة، مما يجعلها من أفضل أماكن مراقبة النجوم.",
-    source: "بيانات المجتمع المحلي — Tatweer",
+    source: "بيانات المجتمع المحلي، Tatweer",
   },
 ];
 
@@ -73,11 +73,11 @@ export const criteria: Criterion[] = [
     id: "impact",
     eyebrow: "Impact",
     title: "Real benefit for real families",
-    body: "Local entrepreneurs and rural households make high-stakes decisions with almost no local data. Hakim turns scattered community knowledge into clear, cited guidance — replacing guesswork with evidence.",
+    body: "Local entrepreneurs and rural households make high-stakes decisions with almost no local data. Hakim turns scattered community knowledge into clear, cited guidance, replacing guesswork with evidence.",
     bullets: [
       "Targets communities where many families depend on camel farming",
       "Lowers the risk of starting or pivoting a small business",
-      "Speaks the local language — UAE Arabic — not just English",
+      "Speaks the local language, UAE Arabic, not just English",
     ],
     icon: Target,
   },
@@ -97,10 +97,10 @@ export const criteria: Criterion[] = [
     id: "feasibility",
     eyebrow: "Feasibility",
     title: "Cheap to run, easy to deploy",
-    body: "The whole solution is a single web app plus an agent — no heavy infrastructure, no data team, and no specialist hardware to maintain.",
+    body: "The whole solution is a single web app plus an agent, with no heavy infrastructure, no data team, and no specialist hardware to maintain.",
     bullets: [
       "Static-friendly Next.js app deployable to Vercel in minutes",
-      "Low monthly cost — scales to zero when idle",
+      "Low monthly cost that scales to zero when idle",
       "Minimal maintenance: content lives in editable data files",
     ],
     icon: CheckCircle2,
@@ -109,7 +109,7 @@ export const criteria: Criterion[] = [
     id: "readiness",
     eyebrow: "Readiness",
     title: "Working today, not just a deck",
-    body: "The agent answers in Arabic and English with citations, the benchmark is run against 50 curated QA, and this site presents the evidence — all functional now.",
+    body: "The agent answers in Arabic and English with citations, the benchmark is run against 50 curated QA, and this site presents the evidence, all functional now.",
     bullets: [
       "Bilingual avatar agent answering with sources",
       "50-QA benchmark with measured accuracy",
@@ -125,7 +125,7 @@ export const criteria: Criterion[] = [
     body: "Nothing about Hakim is locked to one place. Swap the local knowledge base and the same agent serves any rural community in the UAE and beyond.",
     bullets: [
       "Community knowledge is data-driven and swappable",
-      "Same engine, new region — no rebuild required",
+      "Same engine, new region, no rebuild required",
       "A template for rural entrepreneurship across the country",
     ],
     icon: Globe2,
