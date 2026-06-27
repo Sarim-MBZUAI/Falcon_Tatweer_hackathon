@@ -170,8 +170,7 @@ def market_researcher(
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
         raise RuntimeError(
-            "OPENAI_API_KEY is not set. Add it to the environment or a .env file "
-            "(see /home/lukas/users/shashmi/falcon_tatweer_hackathon/.env)."
+            "OPENAI_API_KEY is not set. Add it to your environment or a .env file."
         )
 
     # Imported lazily so module import never requires the SDK to be installed at import.
