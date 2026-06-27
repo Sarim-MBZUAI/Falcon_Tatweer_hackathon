@@ -1,33 +1,27 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { scores } from "@/lib/data";
+import { CheckCircle2 } from "lucide-react";
+import { benchmarkAccuracy, accuracyFacts } from "@/lib/data";
 import { SectionHeading } from "./SectionHeading";
 import { Reveal } from "./Reveal";
 
 function Ring({ value }: { value: number }) {
-  const radius = 56;
+  const radius = 64;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (value / 100) * circumference;
 
   return (
-    <div className="relative h-36 w-36">
-      <svg className="h-full w-full -rotate-90" viewBox="0 0 128 128">
-        <circle
-          cx="64"
-          cy="64"
-          r={radius}
-          fill="none"
-          stroke="#23232b"
-          strokeWidth="8"
-        />
+    <div className="relative h-44 w-44">
+      <svg className="h-full w-full -rotate-90" viewBox="0 0 144 144">
+        <circle cx="72" cy="72" r={radius} fill="none" stroke="#23232b" strokeWidth="9" />
         <motion.circle
-          cx="64"
-          cy="64"
+          cx="72"
+          cy="72"
           r={radius}
           fill="none"
           stroke="url(#goldGrad)"
-          strokeWidth="8"
+          strokeWidth="9"
           strokeLinecap="round"
           strokeDasharray={circumference}
           initial={{ strokeDashoffset: circumference }}
@@ -48,10 +42,10 @@ function Ring({ value }: { value: number }) {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
-          className="font-display text-3xl font-bold text-white"
+          className="font-display text-4xl font-bold text-white"
         >
           {value}
-          <span className="text-lg text-gold">%</span>
+          <span className="text-xl text-gold">%</span>
         </motion.span>
       </div>
     </div>
@@ -65,21 +59,35 @@ export function Scores() {
         <SectionHeading
           eyebrow="Score"
           title="How accurate is Hakim?"
-          description="Measured accuracy of the agent across the 50-QA benchmark. Numbers shown are current results."
+          description="We avoided vague AI hype and measured Hakim with an LLM-as-judge setup, comparing its answers against human-written reference answers on the 50-QA benchmark."
         />
 
-        <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-3">
-          {scores.map((s, i) => (
-            <Reveal key={s.label} delay={i * 0.1}>
-              <div className="flex flex-col items-center rounded-2xl border border-line bg-card/50 p-8">
-                <Ring value={s.value} />
-                <p className="mt-6 font-display text-lg font-semibold text-white">
-                  {s.label}
-                </p>
-                <p className="mt-1 text-sm text-white/45">{s.hint}</p>
-              </div>
-            </Reveal>
-          ))}
+        <div className="mt-14 grid grid-cols-1 items-center gap-8 rounded-3xl border border-line bg-card/50 p-8 sm:p-12 lg:grid-cols-2">
+          <Reveal className="flex flex-col items-center text-center">
+            <Ring value={benchmarkAccuracy.value} />
+            <p className="mt-6 font-display text-lg font-semibold text-white">
+              Overall accuracy
+            </p>
+            <p className="mt-1 max-w-xs text-sm text-white/45">{benchmarkAccuracy.method}</p>
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <p className="text-sm font-semibold uppercase tracking-wider text-gold">
+              What was measured
+            </p>
+            <ul className="mt-4 space-y-3">
+              {accuracyFacts.map((fact) => (
+                <li key={fact} className="flex items-start gap-3 text-white/75">
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-gold" />
+                  <span className="leading-relaxed">{fact}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-6 text-sm leading-relaxed text-white/50">
+              This supports our claim in a falsifiable way: instead of asserting Hakim is helpful,
+              we check whether its guidance is specific, UAE-relevant, practical, and evidence-aware.
+            </p>
+          </Reveal>
         </div>
       </div>
     </section>

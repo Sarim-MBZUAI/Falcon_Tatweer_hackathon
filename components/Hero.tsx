@@ -46,9 +46,11 @@ export function Hero() {
             transition={{ duration: 0.7, delay: 0.15 }}
             className="mt-6 max-w-xl text-lg leading-relaxed text-white/65"
           >
-            A talking avatar that speaks Arabic and English, does real market
-            research, and turns scattered local data into clear, cited insight,
-            so local entrepreneurs decide with evidence, not guesswork.
+            A bilingual avatar you can speak or chat with in Arabic or English.
+            Describe a business idea and Hakim returns a UAE-grounded market
+            research briefing, feasibility, target audience, strategy, key risks,
+            cited evidence, and a chart, so rural entrepreneurs decide with
+            evidence, not guesswork.
           </motion.p>
 
           <motion.p

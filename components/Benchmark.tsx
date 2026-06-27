@@ -1,7 +1,7 @@
 "use client";
 
-import { Quote, BookOpen } from "lucide-react";
-import { benchmarkStats, sampleQAs, type SampleQA } from "@/lib/data";
+import { Quote, CheckCircle2, ShieldCheck } from "lucide-react";
+import { benchmarkStats, sampleQAs, citationGate, type SampleQA } from "@/lib/data";
 import { SectionHeading } from "./SectionHeading";
 import { Reveal } from "./Reveal";
 import { CountUp } from "./CountUp";
@@ -31,20 +31,19 @@ function QACard({ qa, delay }: { qa: SampleQA; delay: number }) {
         </p>
 
         <p className="mt-5 text-sm font-semibold text-white/50">
-          {isArabic ? "إجابة حكيم" : "Hakim's answer"}
+          {isArabic ? "الإجابة المرجعية" : "Strong reference answer"}
         </p>
         <p className="mt-1 leading-relaxed text-white/75">{qa.answer}</p>
 
         <div className="mt-auto" />
         <div className="mt-6 rounded-xl border border-line bg-ink/60 p-4">
           <div className="flex items-center gap-2 text-xs font-semibold text-gold">
-            <BookOpen className="h-3.5 w-3.5" />
-            {isArabic ? "المصدر" : "Citation"}
+            <CheckCircle2 className="h-3.5 w-3.5" />
+            {isArabic ? "لماذا هذا اختبار جيد" : "Why this is a good test"}
           </div>
           <p className="mt-2 text-sm leading-relaxed text-white/60">
-            {qa.citation}
+            {qa.rationale}
           </p>
-          <p className="mt-2 text-xs italic text-white/40">{qa.source}</p>
         </div>
       </article>
     </Reveal>
@@ -56,8 +55,8 @@ export function Benchmark() {
     <section id="benchmark" className="relative mx-auto max-w-6xl px-5 py-24 sm:py-28">
       <SectionHeading
         eyebrow="Benchmark"
-        title="Proven against a curated test set"
-        description="We didn't just build an agent. We measured it. Hakim was benchmarked on a hand-written, manually verified set of questions a local entrepreneur would actually ask."
+        title="Falsifiable, not just claimed"
+        description="We didn't just build an agent, we measured it. Hakim was benchmarked on 50 handcrafted question-answer samples written by four contributors, covering realistic UAE entrepreneurship scenarios in English and Arabic across local demand, idea validation, competition, and rural feasibility."
       />
 
       <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -79,6 +78,20 @@ export function Benchmark() {
           <QACard key={qa.lang} qa={qa} delay={i * 0.1} />
         ))}
       </div>
+
+      <Reveal delay={0.1}>
+        <div className="mt-6 flex flex-col gap-4 rounded-2xl border border-gold/30 bg-gold/[0.06] p-6 sm:flex-row sm:items-start">
+          <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-gold/15 text-gold ring-1 ring-gold/30">
+            <ShieldCheck className="h-6 w-6" />
+          </span>
+          <div>
+            <h3 className="font-display text-lg font-bold text-white">{citationGate.title}</h3>
+            <p className="mt-2 max-w-3xl text-sm leading-relaxed text-white/70">
+              {citationGate.body}
+            </p>
+          </div>
+        </div>
+      </Reveal>
     </section>
   );
 }

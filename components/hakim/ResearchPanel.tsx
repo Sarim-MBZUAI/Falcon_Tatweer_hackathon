@@ -99,47 +99,44 @@ export function ResearchPanel({
   const citations = research.data_citation ?? [];
 
   return (
-    // Fixed 3-row grid: chart (auto) / summary (flexible, scrolls) / citations
-    // (auto). minmax(0,1fr) lets the summary shrink and scroll instead of
-    // pushing into the citations below it.
-    <div className="grid h-full min-h-0 grid-rows-[auto_minmax(0,1fr)_auto] gap-4 overflow-hidden">
-      {/* 1. Chart — static, top */}
-      <div className="space-y-3">
-        {loading && (
-          <div className="flex items-center gap-2 rounded-lg border border-gold/30 bg-gold/10 px-3 py-2 text-xs text-gold-soft">
-            <Loader2 className="h-3.5 w-3.5 animate-spin" /> Updating with new research...
-          </div>
-        )}
-        {charts.length > 0 && (
-          <section>
-            <SectionHeading icon={BarChart3} label="Market data" />
-            <div className="flex flex-col gap-3">
-              {charts.map((g, i) => (
-                <div
-                  key={i}
-                  className="rounded-2xl border border-line bg-gradient-to-b from-card/80 to-card/40 p-4"
-                >
-                  <div className="mb-1 flex items-center justify-between gap-2">
-                    <p className="text-sm font-semibold text-white">{g.title}</p>
-                    {g.is_estimate && (
-                      <span className="shrink-0 rounded-full border border-white/20 bg-white/5 px-2 py-0.5 text-[10px] uppercase text-white/50">
-                        Estimate
-                      </span>
-                    )}
-                  </div>
-                  <ResearchChart graph={g} />
-                  {g.note && <p className="mt-2 text-xs leading-relaxed text-white/45">{g.note}</p>}
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-      </div>
+    // The whole panel scrolls as one column so sections can never overlap.
+    <div className="flex h-full flex-col gap-5 overflow-y-auto pr-1">
+      {loading && (
+        <div className="flex items-center gap-2 rounded-lg border border-gold/30 bg-gold/10 px-3 py-2 text-xs text-gold-soft">
+          <Loader2 className="h-3.5 w-3.5 animate-spin" /> Updating with new research...
+        </div>
+      )}
 
-      {/* 2. Summary — the only scrollable region, middle */}
-      <section className="flex min-h-0 flex-col">
+      {/* 1. Chart */}
+      {charts.length > 0 && (
+        <section>
+          <SectionHeading icon={BarChart3} label="Market data" />
+          <div className="flex flex-col gap-3">
+            {charts.map((g, i) => (
+              <div
+                key={i}
+                className="rounded-2xl border border-line bg-gradient-to-b from-card/80 to-card/40 p-4"
+              >
+                <div className="mb-1 flex items-center justify-between gap-2">
+                  <p className="text-sm font-semibold text-white">{g.title}</p>
+                  {g.is_estimate && (
+                    <span className="shrink-0 rounded-full border border-white/20 bg-white/5 px-2 py-0.5 text-[10px] uppercase text-white/50">
+                      Estimate
+                    </span>
+                  )}
+                </div>
+                <ResearchChart graph={g} />
+                {g.note && <p className="mt-2 text-xs leading-relaxed text-white/45">{g.note}</p>}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* 2. Summary */}
+      <section>
         <SectionHeading icon={Sparkles} label="Summary" />
-        <div className="min-h-0 flex-1 overflow-y-auto rounded-2xl border border-line bg-ink/40 p-4 pr-3">
+        <div className="rounded-2xl border border-line bg-ink/40 p-4">
           <p
             dir={summaryRtl ? "rtl" : "ltr"}
             className={`whitespace-pre-wrap text-sm leading-relaxed text-white/75 ${summaryRtl ? "font-arabic text-right" : ""}`}
@@ -149,19 +146,17 @@ export function ResearchPanel({
         </div>
       </section>
 
-      {/* 3. Citations — static, bottom */}
-      <div>
-        {citations.length > 0 && (
-          <section>
-            <SectionHeading icon={BookOpen} label={`Sources (${citations.length})`} />
-            <div className="flex flex-col gap-2">
-              {citations.map((c, i) => (
-                <CitationCard key={i} c={c} />
-              ))}
-            </div>
-          </section>
-        )}
-      </div>
+      {/* 3. Citations */}
+      {citations.length > 0 && (
+        <section>
+          <SectionHeading icon={BookOpen} label={`Sources (${citations.length})`} />
+          <div className="flex flex-col gap-2">
+            {citations.map((c, i) => (
+              <CitationCard key={i} c={c} />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }
