@@ -15,7 +15,7 @@ import os
 from typing import Literal, Optional, Union
 
 from dotenv import find_dotenv, load_dotenv
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 # Load env (walks up to find the parent .env holding OPENAI_API_KEY). Safe at import:
 # this only reads a dotenv file, it does not make network calls.
@@ -34,7 +34,7 @@ SCOPE (non-negotiable):
 UAE-specific. Prefer emirate-level granularity (Dubai, Abu Dhabi, Sharjah, and the \
 other emirates) where possible.
 - If the user's idea implies a non-UAE market, REFRAME the analysis to the UAE and \
-say so in the uae_scope_note and disclaimers.
+say so in text_summary.
 
 GROUNDING (anti-hallucination — most important):
 - Use ONLY facts found via the web_search tool for citations. Actually search before \
@@ -44,26 +44,28 @@ Dubai Chamber of Commerce, UAE Central Bank, Ministry of Economy, Dubai SME, the
 Department of Economy and Tourism / DED, and official emirate open-data portals.
 - NEVER fabricate statistics, citations, URLs, publishers, or years. If you did not \
 actually find a real source/URL via web search, DO NOT invent one — omit it, or set \
-its confidence to "low" and explain the gap in disclaimers.
-- Every numeric value in graphs_data and every quantitative claim must EITHER trace \
+its confidence to "low" and explain the gap in text_summary.
+- Every numeric value in chart_data and every quantitative claim must EITHER trace \
 to a real entry in data_citation, OR have is_estimate=true with a note stating it is \
 a directional estimate, not measured data.
 - Clearly separate VERIFIED data from REASONING/ESTIMATES. When data is unavailable, \
-say so honestly in disclaimers rather than guessing precise figures.
+say so honestly rather than guessing precise figures.
 
-GRAPHS (graphs_data — make these rich, not sparse):
+CHART (chart_data — make it rich, not sparse):
 - Return exactly 1 chart: the single most decision-relevant view (e.g. market-size \
 growth over time).
-- Each chart needs a multi-point series (aim for 4+ points) so it is actually \
+- The chart needs a multi-point series (aim for 4+ points) so it is actually \
 plottable — search specifically for time-series and breakdown numbers, not single stats.
 - If exact data is missing, fill the series with clearly flagged directional estimates \
-(is_estimate=true) rather than omitting the chart or leaving one lonely point.
+(is_estimate=true) rather than leaving one lonely point.
 
-OUTPUT:
-- Return output STRICTLY within the provided JSON schema. No extra keys, no prose \
-outside the schema.
-- disclaimers MUST explicitly flag which figures are estimates vs. verified, and note \
-that this is decision-support, not financial advice.
+OUTPUT — return STRICTLY the provided JSON schema (exactly 3 fields, no extras):
+- text_summary: a clear, decision-ready prose briefing covering feasibility (with a \
+verdict), target audience, recommended go-to-market strategy, and key risks. Explicitly \
+flag which figures are estimates vs. verified, and note this is decision-support, not \
+financial advice.
+- chart_data: the single chart described above.
+- data_citation: only the real UAE sources you actually found via web search.
 """
 
 
@@ -91,37 +93,6 @@ class Graph(BaseModel):
     note: str
 
 
-class Feasibility(BaseModel):
-    score: int = Field(ge=0, le=100)
-    verdict: str
-    reasoning: str
-    risks: list[str]
-
-
-class Segment(BaseModel):
-    name: str
-    description: str
-    size_estimate: str
-    is_estimate: bool
-
-
-class Persona(BaseModel):
-    name: str
-    description: str
-
-
-class TargetAudience(BaseModel):
-    segments: list[Segment]
-    primary_persona: Persona
-
-
-class Strategy(BaseModel):
-    summary: str
-    steps: list[str]
-    channels: list[str]
-    differentiation: str
-
-
 class Citation(BaseModel):
     claim: str
     source_name: str
@@ -132,15 +103,9 @@ class Citation(BaseModel):
 
 
 class MarketResearch(BaseModel):
-    input_description: str
-    uae_scope_note: str
-    feasibility: Feasibility
-    graphs_data: list[Graph]
-    target_audience: TargetAudience
-    best_strategy: Strategy
+    text_summary: str
+    chart_data: list[Graph]
     data_citation: list[Citation]
-    disclaimers: list[str]
-
 
 def _json_schema() -> dict:
     """JSON schema handed to the Responses API for structured output.
@@ -215,8 +180,6 @@ def market_researcher(
         raise RuntimeError("OpenAI returned no text output for the market research request.")
 
     data = json.loads(raw)
-    # Echo the original input regardless of what the model returned.
-    data["input_description"] = description
     validated = MarketResearch.model_validate(data)
     return validated.model_dump()
 
