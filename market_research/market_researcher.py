@@ -51,6 +51,14 @@ a directional estimate, not measured data.
 - Clearly separate VERIFIED data from REASONING/ESTIMATES. When data is unavailable, \
 say so honestly in disclaimers rather than guessing precise figures.
 
+GRAPHS (graphs_data — make these rich, not sparse):
+- Return 4-6 distinct charts from different angles: market-size growth over time, \
+segment/share breakdown, demand by emirate, seasonality, and price/competitor landscape.
+- Each chart needs a multi-point series (aim for 4+ points) so it is actually \
+plottable — search specifically for time-series and breakdown numbers, not single stats.
+- If exact data is missing, fill the series with clearly flagged directional estimates \
+(is_estimate=true) rather than omitting the chart or leaving one lonely point.
+
 OUTPUT:
 - Return output STRICTLY within the provided JSON schema. No extra keys, no prose \
 outside the schema.
