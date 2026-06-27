@@ -185,14 +185,17 @@ know?", the answer is cited evidence, not AI confidence.
 
 ## Feasibility
 
-Hakim AI is practical to build and run because it is lightweight and entirely
-web-based, with no expensive hardware, complex installation, or large operations
-team. The frontend uses standard web technologies, the market-research output is
-structured and validated, and answers are grounded in live web search rather than
-model memory alone. Because that output is simple to render as text, charts, and
-citations, and because users interact by voice or text, entrepreneurs need no
-technical knowledge to use it. That is exactly what makes it deployable in rural
-communities where comfort with technology varies.
+Hakim AI is practical to build, deploy, and run because it is lightweight and entirely web-based. It does not require expensive hardware, complex installation, or a large operations team.
+
+The platform is feasible because:
+
+- The frontend uses standard web technologies.
+- Market research outputs are structured and validated.
+- Answers are grounded in live web search instead of relying on model memory alone.
+- Results are easy to render as text, charts, and citations.
+- Users can interact through either voice or text.
+
+This makes Hakim AI accessible to entrepreneurs with different levels of technical experience. It is especially well-suited for rural communities, where comfort with technology may vary widely.
 
 ## Scalability
 
