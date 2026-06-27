@@ -52,8 +52,8 @@ a directional estimate, not measured data.
 say so honestly in disclaimers rather than guessing precise figures.
 
 GRAPHS (graphs_data — make these rich, not sparse):
-- Return 3 distinct charts from different angles: market-size growth over time, \
-segment/share breakdown, and demand by emirate.
+- Return exactly 1 chart: the single most decision-relevant view (e.g. market-size \
+growth over time).
 - Each chart needs a multi-point series (aim for 4+ points) so it is actually \
 plottable — search specifically for time-series and breakdown numbers, not single stats.
 - If exact data is missing, fill the series with clearly flagged directional estimates \
