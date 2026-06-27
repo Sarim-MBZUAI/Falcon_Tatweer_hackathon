@@ -27,16 +27,16 @@ MAX_WORKERS = 8
 
 JUDGE_PROMPT = """You grade a market-research assistant for UAE entrepreneurs.
 Compare the ASSISTANT ANSWER to the REFERENCE ANSWER for the user's question.
-Score 1-5: 5 = matches or beats the reference in correctness, usefulness and UAE-grounding;
-1 = wrong or useless. Return ONLY JSON: {"score": <int 1-5>, "reason": "<one sentence>"}."""
+Decide PASS or FAIL: pass = correct, useful and UAE-grounded, on par with the reference;
+fail = wrong, useless, or off-base. Return ONLY JSON: {"correct": true|false, "reason": "<one sentence>"}."""
 
 
 def evaluate_one(row: dict) -> dict:
     question = row["user_question"]
     try:
         answer = market_researcher(question).get("text_summary", "")
-    except Exception as exc:  # tool failed -> score 0
-        return {"id": row["id"], "score": 0, "reason": f"tool error: {exc}"}
+    except Exception as exc:  # tool failed -> fail
+        return {"id": row["id"], "correct": False, "reason": f"tool error: {exc}"}
 
     user = (
         f"QUESTION:\n{question}\n\n"
@@ -52,7 +52,7 @@ def evaluate_one(row: dict) -> dict:
         response_format={"type": "json_object"},
     )
     verdict = json.loads(resp.choices[0].message.content)
-    return {"id": row["id"], "score": verdict.get("score", 0), "reason": verdict.get("reason", "")}
+    return {"id": row["id"], "correct": bool(verdict.get("correct", False)), "reason": verdict.get("reason", "")}
 
 
 def main() -> None:
@@ -66,7 +66,8 @@ def main() -> None:
             results.append(fut.result())
 
     results.sort(key=lambda r: r["id"])
-    avg = sum(r["score"] for r in results) / len(results)
+    n_correct = sum(1 for r in results if r["correct"])
+    accuracy = n_correct / len(results)
 
     out_dir = os.path.join(HERE, "..", "benchmark_result")
     os.makedirs(out_dir, exist_ok=True)
@@ -75,7 +76,7 @@ def main() -> None:
         for r in results:
             f.write(json.dumps(r, ensure_ascii=False) + "\n")
 
-    print(f"\nAverage score: {avg:.2f}/5 over {len(results)} questions")
+    print(f"\nAccuracy: {n_correct}/{len(results)} correct ({accuracy:.1%})")
     print(f"Saved -> {out}")
 
 
