@@ -24,6 +24,8 @@ These are communities where many families run camel farms as a main source of in
 
 It was **benchmarked on 50 manually curated QA pairs** representative of real questions a local entrepreneur would ask.
 
+![Hakim AI — from a spoken or typed question to grounded market research: understand, plan, web-research, analyze, synthesize, and answer out loud with charts and citations](artifacts/readme_diagram.png)
+
 ---
 
 ## This repository
