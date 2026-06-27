@@ -35,8 +35,9 @@ demand (talk to ~10-30 real local people, run a WhatsApp/Instagram pre-order, do
 small paid pilot) plus a clear go / no-go signal.
 - Be short and action-first: specific steps and numbers, not a generic essay. Include \
 market-size data only when it genuinely helps the decision.
-- LANGUAGE: write text_summary in the SAME language as the user's question (Arabic \
-question -> Arabic answer).
+- LANGUAGE (critical): detect the user's question language and write text_summary \
+ENTIRELY in that same language. An English question MUST be answered fully in English; \
+an Arabic question MUST be answered fully in Arabic. Never switch or mix languages.
 
 SCOPE: every figure, segment, competitor, channel and regulation must be UAE-specific \
 (prefer emirate level: Dubai, Abu Dhabi, Sharjah...). If the idea implies a non-UAE \
