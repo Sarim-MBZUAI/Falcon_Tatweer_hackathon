@@ -176,23 +176,6 @@ cannot support its output with evidence, that answer is not used. Supported
 findings stay separate from assumptions, so when someone asks "how do you
 know?", the answer is cited evidence, not AI confidence.
 
-## Judging criteria
-
-- **Impact** — helps entrepreneurs make better decisions before spending money;
-  especially useful for those who cannot afford formal research or consulting.
-- **Relevance** — built specifically for Challenge 3 (the data gap), not a
-  generic chatbot.
-- **Feasibility** — lightweight, web-based, no special hardware or large ops
-  team; web-search grounding and structured, validated output.
-- **Readiness** — works end to end today: voice + text, English + Arabic, avatar
-  speech, market research, charts, and citations.
-- **Scalability** — the same workflow serves other rural communities, emirates,
-  tourism/farming hubs, and youth programs. Roadmap: WhatsApp integration, saved
-  reports, community survey collection, demand dashboards, more Arabic dialect
-  support, and integration with official UAE open-data sources.
-
----
-
 ## This repository
 
 | Part | What it is |
