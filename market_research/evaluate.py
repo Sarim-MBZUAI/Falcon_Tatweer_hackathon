@@ -69,7 +69,7 @@ def main() -> None:
     n_correct = sum(1 for r in results if r["correct"])
     accuracy = n_correct / len(results)
 
-    out_dir = os.path.join(HERE, "..", "benchmark_result")
+    out_dir = os.path.join(HERE, "benchmark_result")
     os.makedirs(out_dir, exist_ok=True)
     out = os.path.join(out_dir, "eval_results.jsonl")
     with open(out, "w", encoding="utf-8") as f:
