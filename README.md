@@ -26,10 +26,7 @@ way, moving rural entrepreneurship from guessing to evidence-based action.
 
 ## The problem
 
-Built for the **Tatweer Hackathon**, Challenge 3: _The data gap for local
-entrepreneurs_. Hakim AI is built for rural UAE communities where many people
-have strong business ideas but limited access to local market data, customer
-insights, or professional research support.
+Built for Tatweer Hackathon Challenge 3: The Data Gap for Local Entrepreneurs, Hakim AI supports rural communities across the UAE where many aspiring entrepreneurs have strong business ideas but limited access to local market data, customer insights, and professional research support.
 
 Local entrepreneurs in rural communities often make decisions without enough
 evidence. They may not know:
