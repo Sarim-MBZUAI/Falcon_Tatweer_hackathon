@@ -18,7 +18,7 @@ from tqdm import tqdm
 from market_researcher import market_researcher
 
 load_dotenv(find_dotenv())
-client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+client = OpenAI(api_key=os.environ["OPENAI_API_KEY"], timeout=60.0)
 
 HERE = os.path.dirname(__file__)
 BENCHMARK = os.path.join(HERE, "..", "benchmark", "tatweer_market_research_qa_benchmark.csv")

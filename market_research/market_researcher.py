@@ -144,7 +144,8 @@ def market_researcher(
     # Imported lazily so module import never requires the SDK to be installed at import.
     from openai import OpenAI
 
-    client = OpenAI(api_key=api_key)
+    # timeout so a stuck web_search request raises instead of hanging forever.
+    client = OpenAI(api_key=api_key, timeout=120.0)
 
     user_input = (
         "Business idea to research (UAE market only):\n"
