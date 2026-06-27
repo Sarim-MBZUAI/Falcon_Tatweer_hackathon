@@ -247,20 +247,6 @@ npm start
 The site is a lightweight Next.js app and deploys to **Vercel**: low cost,
 scales to zero when idle, minimal maintenance.
 
-## Editing content
-
-All landing-page copy and numbers (benchmark stats, sample QA, accuracy,
-criteria text, repo URL, citation-gate note) live in
-[`lib/data.ts`](lib/data.ts). Update values there, no component changes needed.
-
-## Home page sections
-
-1. **Hero** — Hakim AI intro + `Try Agent` call to action.
-2. **Benchmark** — 50 curated QA, build hours, contributors, two example QA
-   (English + Arabic), and the citation-gating integrity note.
-3. **Score** — 74% accuracy (LLM-as-judge) and what was measured.
-4. **Repository & documentation** — repo link and what this README covers.
-
 ## Why Hakim AI matters
 
 Many entrepreneurs don't need a complex business report. They need clear answers
