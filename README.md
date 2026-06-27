@@ -4,6 +4,8 @@
 
 ![Hakim AI — from a spoken or typed question (English or Arabic) through the market-research workflow (understand, plan, web-research, analyze, synthesize, generate) to a spoken answer with text, charts, and citations](artifacts/readme_diagram.png)
 
+**▶ [Watch the demo](https://youtu.be/qPt7Ms9KQfE)**
+
 Hakim AI helps local entrepreneurs make better business decisions using evidence
 instead of guesswork. Entrepreneurs can **speak or type naturally in English or
 Arabic**, describe a business idea, and receive a structured market-research
