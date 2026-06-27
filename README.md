@@ -196,17 +196,32 @@ communities where comfort with technology varies.
 
 ## Scalability
 
-Hakim AI scales well beyond Al Qua'a because the underlying problem, entrepreneurs
-lacking local data when deciding what to build or sell, exists almost everywhere:
-other rural UAE communities, different emirates, and tourism, farming,
-home-business, youth-entrepreneurship, and SME-support settings. The core workflow
-never changes. The user describes an idea, Hakim searches for UAE-specific
-evidence, and the tool returns feasibility, target audience, strategy, risks, a
-chart, and citations that lead to a clear next step, so adapting it to a new
-community is mostly a matter of swapping the local knowledge base. Future versions
-can extend this with WhatsApp access, saved business reports, community survey
-collection, demand dashboards, broader Arabic-dialect support, village-by-village
-comparison, and integration with official UAE open-data sources.
+Hakim AI is designed to scale well beyond Al Qua'a. The core problem it addresses — entrepreneurs lacking reliable local data when deciding what to build or sell — exists across many contexts, including rural UAE communities, different emirates, tourism initiatives, farming businesses, home-based businesses, youth entrepreneurship programs, and SME support settings.
+
+The core workflow remains the same:
+
+1. The user describes a business idea.
+2. Hakim AI searches for UAE-specific evidence.
+3. The tool returns:
+   - Feasibility analysis
+   - Target audience insights
+   - Strategy recommendations
+   - Key risks
+   - A supporting chart
+   - Citations
+   - A clear next step
+
+Adapting Hakim AI to a new community is mostly a matter of swapping or expanding the local knowledge base.
+
+Future versions could extend the platform with:
+
+- WhatsApp access
+- Saved business reports
+- Community survey collection
+- Demand dashboards
+- Broader Arabic dialect support
+- Village-by-village comparison
+- Integration with official UAE open-data sources
 
 ## This repository
 
