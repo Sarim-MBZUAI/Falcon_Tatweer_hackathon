@@ -67,9 +67,13 @@ def main() -> None:
 
     results.sort(key=lambda r: r["id"])
     avg = sum(r["score"] for r in results) / len(results)
-    out = os.path.join(HERE, "eval_results.json")
+
+    out_dir = os.path.join(HERE, "..", "benchmark_result")
+    os.makedirs(out_dir, exist_ok=True)
+    out = os.path.join(out_dir, "eval_results.jsonl")
     with open(out, "w", encoding="utf-8") as f:
-        json.dump({"average_score": avg, "n": len(results), "results": results}, f, indent=2, ensure_ascii=False)
+        for r in results:
+            f.write(json.dumps(r, ensure_ascii=False) + "\n")
 
     print(f"\nAverage score: {avg:.2f}/5 over {len(results)} questions")
     print(f"Saved -> {out}")
